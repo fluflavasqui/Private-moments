@@ -61,3 +61,27 @@ powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\tests\Verify.ps1
 ## Referências de UX
 
 Foram usados os frameworks de Tommy Jepsen em [Awesome UX Skills](https://github.com/tommyjepsen/awesome-ux-skills) e as orientações de formulários e dashboards de Richard [@richardrx](https://x.com/richardrx), compiladas por Helio Costa em [Revenue-Centric Design](https://github.com/heliocosta-dev/revenue-centric-design). Detalhes e atribuição em [docs/UX.md](docs/UX.md); termos integrais dessa referência em [third-party/revenue-centric-design-LICENSE.txt](third-party/revenue-centric-design-LICENSE.txt).
+
+## Versão web local
+
+A versão web fica em `web/`. Requer Node.js 20 ou superior, sem instalar dependências.
+
+```powershell
+node server.cjs
+```
+
+Abra http://127.0.0.1:3000 (ou http://localhost:3000). Também pode executar `Iniciar-Web.ps1`. Mantenha o processo aberto durante o uso. O servidor escuta somente na interface local do computador.
+
+Comece em **Dados do turno**, informe responsável, data e estoques iniciais em unidades. Registre vendas em dinheiro, cartão ou dividido; os preços, descontos JD e baixa de estoque seguem as regras originais. O histórico permite edição e exclusão com confirmação. Relatórios incluem o modelo original de fechamento e o relatório curto que agrupa WD, JD e SD. O WhatsApp abre o texto; o usuário escolhe a conversa e confirma o envio.
+
+Os dados são salvos no localStorage deste navegador e deste endereço. Use sempre o mesmo endereço: localhost e 127.0.0.1 têm armazenamentos separados. Exporte backups regularmente, especialmente antes de restaurar outro backup ou limpar dados do navegador. A restauração aceita backups da versão web; não importa automaticamente `dados.json` do aplicativo Windows. O aplicativo Windows permanece disponível sem alterações.
+
+Lembretes visuais dependem da página aberta e do navegador em execução; abas em segundo plano podem atrasar os avisos. A web não tem o comportamento de bandeja do Windows. Cada armazenamento mantém um turno; exporte o turno antes de substituir dados. Não há sincronização, servidor de dados ou histórico de turnos independente dos backups exportados.
+
+Verificação:
+
+```powershell
+node --test web/core.test.cjs
+```
+
+A interface foi revisada com os princípios de dashboards, formulários e ativação da skill Revenue-Centric Design, de Richard (@richardrx), compilada por Helio Costa. Veja `docs/WEB-UX.md` e os termos em `third-party/revenue-centric-design-LICENSE.txt`.

@@ -1,0 +1,4 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),core=require('./core.js');
+test('preços originais e descontos JD',()=>{assert.equal(core.price('WD',2,1),11500);assert.equal(core.price('SD',1,2),10000);assert.equal(core.price('Cinema',0,0,3),5400);for(const [n,p] of [[1,2000],[4,5500],[7,9000],[8,11000],[11,14500]])assert.equal(core.price('JD',0,0,n),p)});
+test('valores monetários em centavos',()=>{assert.equal(core.cents('10,50'),1050);assert.equal(core.cents('0.01'),1);for(const v of ['-1','1.001','1e4',''])assert.throws(()=>core.cents(v))});
+test('pagamento dividido e saldo de estoque',()=>{const sales=[{category:'WD',cents:5000,cash:2000,card:3000,quantity:4},{category:'Cinema',cents:1800,cash:1800,card:0,quantity:1}];assert.deepEqual(core.totals(sales),{Cash:3800,Card:3000,Total:6800,WD:5000,JD:0,SD:0,Shop:0,Cinema:1800});assert.equal(core.remaining({settings:{stock:{WD:20}},sales},'WD'),16)});
